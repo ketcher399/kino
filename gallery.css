@@ -1,0 +1,17 @@
+a[data-fancybox] img {
+  cursor: zoom-in;
+  width: 225px;
+}
+a[data-fancybox] img:hover {
+  box-shadow: 0 0 5px #000;
+  transition: 1s ease-in-out;
+}
+
+.fancybox__caption {
+  text-align: center;
+}
+.header__logo {
+    display: flex;
+background-image: url(log.png);
+    margin-right: 50px;
+}
