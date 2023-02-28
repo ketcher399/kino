@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>My filmes</title>
+   <link rel="stylesheet" type="text/css" href="seans/css/style.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<body>
+  <div class='result'>
+  </div>
+  <div class='cinemaHall zal1'></div>
+  <script type="text/javascript">
+var cinemaHall1 = {
+    row: [10, 20, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+  },
+  cinemaHallMap = '';
+$.each(cinemaHall1.row, function(row, numberOfSeats) {
+  cinemaHallRow = '';
+  for (i = 1; i <= numberOfSeats; i++) {
+    // собираем ряды
+    cinemaHallRow += '<div class="seat" data-row="' +
+      i + '" data-seat="' +
+      i + '">&nbsp;</div>';
+  }
+  //собираем зал с проходами между рядами
+  cinemaHallMap += cinemaHallRow + '<div class="passageBetween">&nbsp;</div>';
+});
+
+//заполняем в html зал номер 1
+$('.zal1').html(cinemaHallMap);
+// тут по клику определяем что место выкуплено
+$('.seat').on('click', function(e) {
+  // если первый раз кликнули билет выкупили, 
+  // если повторно значит вернули билет
+  $(e.currentTarget).toggleClass('bay');
+  //показываем сколько билетов выкуплено
+  showBaySeat();
+});
+
+function showBaySeat() {
+  result = '';
+  //ищем все места купленные и показываем список выкупленных мест
+  $.each($('.seat.bay'), function(key, item) {
+    result += '<div class="ticket">Ряд: ' +
+      $(item).data().row + ' Место:' +
+      $(item).data().seat + '</div>';
+  });
+
+  $('.result').html(result);
+}
+
+</script>
+<style type="text/css">.cinemaHall 
+
+{
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+}
+.seat {
+  height: 20px;
+  width: 20px;
+  margin-right: 2px;
+  background-color: #999999;
+  display: inline-block;
+  cursor: pointer;
+
+}
+.passageBetween {
+  height: 1px;
+  width: 100%;
+  display: block;
+}
+.bay {
+  background-color: red;
+}
+.result {
+  font-size: 10px;
+  display: inline-block;
+  width: 90px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-right: 5px;
+}</style>
+<script type="text/javascript">
+  package Film;
+import java.util.Scanner;
+ 
+ 
+public class Film {
+private String name;
+private double price;
+ 
+ 
+ 
+public Film(){
+    name=null;
+    price=0;
+}
+ 
+public Film(String name, double pprice){
+    this.name=name;
+    this.price=pprice;
+}
+ 
+public String getName(){
+    return name;
+    
+}
+public double getPrice(){
+    return price;
+}
+public void setName(String name){
+    this. name=name;
+}
+ 
+public void setYear(double price){
+    this.price=price; 
+}
+public class Zap_Methods { 
+    
+}
+  
+  public  static Film [] setMovieArr(int k){
+      Scanner sc=new Scanner(System.in,"cp1251");
+      Film movie[]=new Film[k];
+      System.out.println("Введите информацию о Фильмах:");
+       for (int i = 0; i < movie.length; i++) {
+           String temp=sc.nextLine();
+           movie[i]=new Film();
+           System.out.print("Название "+(i+1)+"-го фильма => "); 
+           movie[i].setName(sc.nextLine());
+            
+           System.out.print("Стоимость "+(i+1)+"-го фильма => ");  
+           movie[i].setYear(sc.nextDouble());
+        } 
+   return movie;
+   }
+    
+public static void showArray(Film [] flm){ 
+         for (int i = 0; i < flm.length; i++) {
+             System.out.println("" + flm[i].getName() + " \t" + flm[i].getPrice() );
+         }
+ }
+ 
+ public static void showMovie(Film flm){ 
+  System.out.println(""+flm.getName()+"\t"+flm.getPrice());
+  
+ }
+         
+         
+ public static int NomMax(Film []st){
+    
+        int nommax=0; 
+        double  max=st[nommax].getPrice(); 
+        
+        for (int i = 0; i < st.length; i++) {
+         if (st[i].getPrice()>max) {
+            max= st[i].getPrice();
+            nommax=i;
+         }
+     } 
+     return nommax;
+ }
+ 
+ public static Film [] sortYear(Film []flm){
+ 
+  for (int i = 0; i < flm.length-1; i++) {
+         for (int j = 0; j < flm.length-1-i; j++) {
+          if (flm[j].getPrice()>flm[j+1].getPrice()){
+            Film rab=flm[j];
+            flm[j]=flm[j+1];
+            flm[j+1]=rab;
+          }
+      }
+     }
+ return flm;
+ }
+ 
+ public static Film []sortName(Film [] flm){ 
+    
+    for (int i = 0; i < flm.length-1; i++) {
+         for (int j = 0; j < flm.length-i-1; j++) {
+            if ( flm[j].getName().charAt(0) > flm[j+1].getName().charAt(0)){
+              Film rab=flm[j];
+              flm[j]=flm[j+1];
+              flm[j+1]=rab;
+            }
+        }
+     }
+    return flm;
+ }       
+     
+ public static double avgYear( Film [] flm){
+    double s=0;
+    for (int i = 0; i < flm.length; i++) {
+         s+=flm[i].getPrice();
+     }
+ 
+    double sr=s/flm.length;
+   return  sr; 
+ }
+ 
+ 
+   public static Film [] Bigger(Film  flm[]){
+ 
+       double sred=avgYear(flm);
+       int kol=0;  
+       for (int i = 0; i < flm.length; i++) {
+           if (flm[i].getPrice()>sred) {
+               ++kol;
+           }
+       }
+       System.out.println("Количество n="+kol);
+       if (kol!=0){
+            Film [] bigMovie=new Film[kol]; 
+            int n=-1; 
+            for (int i = 0; i < flm.length; i++) {
+               if (flm[i].getPrice()>sred) {
+                 bigMovie[++n]=flm[i];
+               }
+           }
+            return bigMovie;
+       } else {
+           return null;
+       }
+     }  
+   
+ 
+   public static Film findForName(Film flm[], String name){
+       int n=-1;
+       for (int i = 0; i < flm.length; i++) { 
+           if (name.equals(flm[i].getName())) {
+               n=i;
+           }
+       }
+       if (n!=-1) {
+          return flm[n]; 
+       }else {
+           return null;
+       }
+   }
+      public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in,"cp1251");
+       
+      System.out.print("Введите количество фильмов=> ");
+      int n=sc.nextInt(); 
+      Film movie[]= setMovieArr(n); 
+       
+      
+        System.out.println("\nХарактеристики фильмов:");
+        showArray(movie);
+       
+       
+        int nommax=NomMax(movie);
+         System.out.println("\n Фильм с максимальной ценой :");
+         showMovie(movie[nommax]);
+         
+         
+         Film [] sortSq=sortPrice(movie);
+         System.out.println("\nОтсортированный список по цене:");
+         showArray(sortSq); 
+        
+         
+      
+         Film []sortNm=sortName(movie);
+        System.out.println("\nОтсортированный список по названиям:");
+        showArray(sortNm);
+        
+     
+       System.out.println("Средняя цена ="+avgPrice(movie)); 
+  
+      
+       System.out.println("\n Фильмы с ценой больше средней");
+        Film [] larger=Bigger(movie);
+        showArray(larger);
+     
+       System.out.println("\nПОИСК   Фильма \n Введите название фильма => ");
+       String temp=sc.nextLine();
+       String sname=sc.nextLine();
+        Film sfind =findForName(movie, sname);
+        if (sfind!=null) {
+           showMovie(sfind); 
+        } else {
+            System.out.println("Такого фильма нет в списке!");
+        }
+        
+    }
+</script>
+</body>
